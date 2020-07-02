@@ -57,6 +57,9 @@ def main():
         sys.exit("Usage: python degrees.py [directory]")
     directory = sys.argv[1] if len(sys.argv) == 2 else "large"
 
+    # REMEMEBER TO REMOVE THIS LATER
+    directory = "small"
+
     # Load data from files into memory
     print("Loading data...")
     load_data(directory)
@@ -92,8 +95,42 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
+    explored_count = 0
+
+    start = Node(state=source, parent=None, action=None)
+    data = QueueFrontier()
+    data.add(start)
+
+    explored = set()
+
+    while True:
+        # if there is no solution
+        if data.empty():
+            return None
+
+        # remove a node
+        node = data.remove()
+        explored_count += 1
+
+        # checking if it is complete
+        if node.state == target:
+            actions = []
+            while node.parent is not None:
+                actions.append(node.action, node.state)
+                node = node.parent
+            actions.reverse()
+            return actions
+
+        explored.add(node.state)
+
+        for movie, person in neighbors_for_person(node.state):
+            if not data.contains_state(person) and person not in explored:
+                data.add(Node(person, node, movie))
+
+
+
     # TODO
-    raise NotImplementedError
+    # raise NotImplementedError
 
 
 def person_id_for_name(name):
@@ -136,4 +173,10 @@ def neighbors_for_person(person_id):
 
 
 if __name__ == "__main__":
-    main()
+    a = {'b': {'c': 'wdfwf'}}
+    print(a['b']['c'])
+
+    load_data("small")
+    print(neighbors_for_person('102'))
+
+    # main()
