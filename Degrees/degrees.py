@@ -57,8 +57,8 @@ def main():
         sys.exit("Usage: python degrees.py [directory]")
     directory = sys.argv[1] if len(sys.argv) == 2 else "large"
 
-    # REMEMEBER TO REMOVE THIS LATER
-    directory = "small"
+    # # REMEMEBER TO REMOVE THIS LATER
+    # directory = "small"
 
     # Load data from files into memory
     print("Loading data...")
@@ -116,13 +116,15 @@ def shortest_path(source, target):
         if node.state == target:
             actions = []
             while node.parent is not None:
-                actions.append(node.action, node.state)
+                actions.append((node.action, node.state))
                 node = node.parent
             actions.reverse()
             return actions
 
+        # adding explored node to set
         explored.add(node.state)
 
+        # getting next ones to search as co-stars in a movie
         for movie, person in neighbors_for_person(node.state):
             if not data.contains_state(person) and person not in explored:
                 data.add(Node(person, node, movie))
@@ -173,10 +175,10 @@ def neighbors_for_person(person_id):
 
 
 if __name__ == "__main__":
-    a = {'b': {'c': 'wdfwf'}}
-    print(a['b']['c'])
+    # a = {'b': {'c': 'wdfwf'}}
+    # print(a['b']['c'])
+    #
+    # load_data("small")
+    # print(neighbors_for_person('102'))
 
-    load_data("small")
-    print(neighbors_for_person('102'))
-
-    # main()
+    main()
