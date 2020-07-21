@@ -53,7 +53,24 @@ knowledge2 = And(
 # B says "C is a knave."
 # C says "A is a knight."
 knowledge3 = And(
-    # TODO
+    # basic knowlege
+    Or(AKnight, AKnave),
+    Or(BKnave, BKnight),
+    Or(CKnight, CKnave),
+    Implication(AKnight, Not(AKnave)),
+    Implication(BKnight, Not(BKnave)),
+    Implication(CKnight, Not(CKnave)),
+
+    # looking at A
+    Biconditional(Or(AKnight, AKnight), Or(AKnave, AKnight)),
+
+    # if we assume b is telling the truth, that is if he is a knight
+    # it means c has to be a knave, and A has to be a knave as well, as the assumption is B is a knight
+    Biconditional(BKnight, And(CKnave, AKnave)),
+
+    # if we assume B is lying
+    # then c is a knight, and implies A is a knight. what A said does not matter
+    Biconditional(BKnave, And(CKnight, AKnight))
 )
 
 
